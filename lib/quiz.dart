@@ -17,13 +17,12 @@ class _QuizState extends State<Quiz> {
   List<String> selectedAnswers = [];
   var activeScreen = 'start-screen';
 
-  // Widget? activeScreen;
-
-  // @override
-  // void initState() {
-  //   activeScreen = StartScreen(switchScreen);
-  //   super.initState();
-  // }
+  void restartQuiz() {
+    setState(() {
+      selectedAnswers = [];
+      activeScreen = 'questions-screen';
+    });
+  }
 
   void switchScreen() {
     setState(() {
@@ -37,7 +36,6 @@ class _QuizState extends State<Quiz> {
     if (selectedAnswers.length == questions.length) {
       setState(
         () {
-          selectedAnswers = [];
           activeScreen = 'results-screen';
         },
       );
@@ -47,7 +45,7 @@ class _QuizState extends State<Quiz> {
   @override
   Widget build(context) {
     return MaterialApp(
-      // debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
@@ -64,7 +62,7 @@ class _QuizState extends State<Quiz> {
               ? StartScreen(switchScreen)
               : activeScreen == 'questions-screen'
                   ? QuestionsScreen(chooseAnswer)
-                  : ResultsScreen(selectedAnswers),
+                  : ResultsScreen(selectedAnswers, restartQuiz),
         ),
       ),
     );
